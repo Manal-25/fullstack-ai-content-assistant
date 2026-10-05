@@ -1,0 +1,14 @@
+{
+  "name": "ai-content-assistant",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["frontend", "backend"],
+  "engines": { "node": ">=20.9.0" },
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c cyan,magenta \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "build": "npm run build -w frontend",
+    "start": "concurrently -k -n api,web \"npm start -w backend\" \"npm start -w frontend\"",
+    "test": "npm test -w backend"
+  },
+  "devDependencies": { "concurrently": "^9.2.1" }
+}

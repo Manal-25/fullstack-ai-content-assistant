@@ -145,5 +145,12 @@ vite.config.ts.timestamp-*
 # Astro generated types
 .astro/
 
+# Local content database and verification artifacts
+backend/data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.verification/
+
 # Turbo Repo
 .turbo
