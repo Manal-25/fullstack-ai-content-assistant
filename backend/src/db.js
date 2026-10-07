@@ -28,6 +28,8 @@ export function entryRepository(db) {
   const insert = db.prepare('INSERT INTO entries (original_text, summary, tags, created_at) VALUES (?, ?, ?, ?)');
   const find = db.prepare('SELECT * FROM entries WHERE id = ?');
   const list = db.prepare('SELECT * FROM entries ORDER BY id DESC');
+  const remove = db.prepare('DELETE FROM entries WHERE id = ?');
+
   return {
     list: () => list.all().map(toEntry),
     find: id => toEntry(find.get(id)),
@@ -35,5 +37,6 @@ export function entryRepository(db) {
       const result = insert.run(text, summary, JSON.stringify(tags), new Date().toISOString());
       return toEntry(find.get(result.lastInsertRowid));
     },
+    delete: id => remove.run(id),
   };
 }
