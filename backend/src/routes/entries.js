@@ -17,5 +17,16 @@ export function entriesRouter({ repository, summarize }) {
     const output = validateOutput(await summarize(text));
     res.status(201).json(repository.create(text, output));
   });
+
+  router.delete('/:id', (req, res) => {
+    const id = Number(req.params.id);
+    if (!Number.isSafeInteger(id) || id < 1) throw new AppError(400, 'Invalid entry ID.');
+
+    const result = repository.delete(id);
+    if (result.changes === 0) throw new AppError(404, 'Entry not found.');
+
+    res.json({ message: 'Entry deleted successfully.' });
+  });
+
   return router;
 }
